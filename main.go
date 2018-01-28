@@ -17,10 +17,12 @@ func setHost(configFile, host, identityFile, username string) (error, string) {
 	if err != nil {
 		return err, "opening ssh config file"
 	}
-	defer f.Close()
 	cfg, err := ssh_config.Decode(f)
 	if err != nil {
 		return err, "parsing ssh config file"
+	}
+	if err := f.Close(); err != nil {
+		return err, "closing file"
 	}
 	for _, host := range cfg.Hosts {
 		if !host.Matches("github.com") {
