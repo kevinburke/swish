@@ -21,9 +21,6 @@ func setHost(configFile, host, identityFile, username string) (error, string) {
 	if err != nil {
 		return err, "parsing ssh config file"
 	}
-	if err := f.Close(); err != nil {
-		return err, "closing file"
-	}
 	for _, host := range cfg.Hosts {
 		if !host.Matches("github.com") {
 			continue
@@ -44,7 +41,11 @@ func setHost(configFile, host, identityFile, username string) (error, string) {
 	if err != nil {
 		return err, "getting file mode"
 	}
-	f2, err := safefile.Create(f.Name(), stat.Mode())
+	name := f.Name()
+	if err := f.Close(); err != nil {
+		return err, "closing file"
+	}
+	f2, err := safefile.Create(name, stat.Mode())
 	if err != nil {
 		return err, "creating temp file"
 	}
