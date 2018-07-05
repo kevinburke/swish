@@ -1,0 +1,12 @@
+
+[[constraint]]
+  branch = "master"
+  name = "github.com/dchest/safefile"
+
+[[constraint]]
+  name = "github.com/kevinburke/ssh_config"
+  version = "0.4.0"
+
+[prune]
+  go-tests = true
+  unused-packages = true

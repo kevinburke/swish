@@ -1,0 +1,17 @@
+language: go
+go_import_path: github.com/kevinburke/swish
+
+os: linux
+dist: trusty
+sudo: false
+
+before_script:
+  - go get ./...
+
+go:
+  - 1.10.x
+  - master
+
+cache:
+  directories:
+    - $GOPATH/pkg
